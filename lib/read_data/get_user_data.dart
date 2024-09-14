@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 
 class GetUserData {
   // Method to get the document ID that matches the user's UID
@@ -15,7 +16,9 @@ class GetUserData {
         return null;
       }
     } catch (e) {
-      print('Error fetching document: $e');
+      if (kDebugMode) {
+        print('Error fetching document: $e');
+      }
       return null;
     }
   }
@@ -49,7 +52,9 @@ class GetUserData {
         };
       }
     } catch (e) {
-      print('Error fetching user data: $e');
+      if (kDebugMode) {
+        print('Error fetching user data: $e');
+      }
       return {
         'firstName': 'Error',
         'lastName': 'Error',

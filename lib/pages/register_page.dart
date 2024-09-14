@@ -5,7 +5,7 @@ import 'package:email_validator/email_validator.dart'; // Add this package to yo
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
-  const RegisterPage({Key? key, required this.showLoginPage}) : super(key: key);
+  const RegisterPage({super.key, required this.showLoginPage});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
