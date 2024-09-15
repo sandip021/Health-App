@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health/read_data/get_user_data.dart';
+import 'package:health/pages/BMI/BMI.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -30,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -62,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontSize: 36,
                         ),
                       ),
-                      const SizedBox(height: 10), // Reduced space here
+                      const SizedBox(height: 10),
                       const Text(
                         'Here are your details:',
                         style: TextStyle(
@@ -70,10 +71,29 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 20), // Adjusted space here
+                      const SizedBox(height: 20),
                       buildDataRow(Icons.person, 'First Name:', userData!['firstName'] ?? 'No first name available'),
+                      const SizedBox(height: 10),
                       buildDataRow(Icons.person_outline, 'Last Name:', userData!['lastName'] ?? 'No last name available'),
+                      const SizedBox(height: 10),
                       buildDataRow(Icons.cake, 'Age:', userData!['age'] ?? 'No age available'),
+
+                      // Add a button to navigate to BMI Calculator
+                      const SizedBox(height: 20),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            // Navigate to BMICalculatorPage when button is pressed
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const BMICalculatorPage(),
+                              ),
+                            );
+                          },
+                          child: const Text('Go to BMI Calculator'),
+                        ),
+                      ),
                     ],
                   ),
                 ),
