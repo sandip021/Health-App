@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health/auth/auth_page.dart';
-import 'package:health/pages/profile_page.dart';
+import 'package:health/screens/main_screen.dart';
 // Ensure you import LoginPage
 
 class MainPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const ProfilePage();
+            return const MainScreen();
           } else {
             return const AuthPage();
           }

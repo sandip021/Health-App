@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart'; // for kDebugMode
+import 'package:flutter/foundation.dart';
+import 'package:health/const/constant.dart'; // for kDebugMode
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -88,7 +89,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[200],
+        backgroundColor: backgroundColor,
         elevation: 0,
       ),
       body: Column(
@@ -134,7 +135,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ? const CircularProgressIndicator()
               : MaterialButton(
                   onPressed: _isLoading ? null : passwordReset,
-                  color: Colors.deepPurple[200],
+                  color: secondaryColor,
                   child: const Text('Reset Password'),
                 ),
         ],

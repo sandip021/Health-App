@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:health/read_data/get_user_data.dart';
-import 'package:health/pages/BMI/BMI.dart';
+import 'package:health/pages/signup/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -41,10 +41,18 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-            },
-          ),
+            onPressed: () async {
+               await FirebaseAuth.instance.signOut(); // Sign out the user
+               if (mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage(showRegisterPage: () {})),
+                  (route) => route.isFirst, // Keep the first route (initial app route)
+      );
+    }
+  },
+),
+
         ],
       ),
       body: SafeArea(
@@ -77,23 +85,6 @@ class _ProfilePageState extends State<ProfilePage> {
                       buildDataRow(Icons.person_outline, 'Last Name:', userData!['lastName'] ?? 'No last name available'),
                       const SizedBox(height: 10),
                       buildDataRow(Icons.cake, 'Age:', userData!['age'] ?? 'No age available'),
-
-                      // Add a button to navigate to BMI Calculator
-                      const SizedBox(height: 20),
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Navigate to BMICalculatorPage when button is pressed
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const BMICalculatorPage(),
-                              ),
-                            );
-                          },
-                          child: const Text('Go to BMI Calculator'),
-                        ),
-                      ),
                     ],
                   ),
                 ),

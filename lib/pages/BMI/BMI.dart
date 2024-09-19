@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
+// ignore: file_names
+import 'package:flutter/material.dart' show AppBar, BuildContext, Color, Colors, Column, CrossAxisAlignment, EdgeInsets, ElevatedButton, FontWeight, InputDecoration, MainAxisAlignment, OutlineInputBorder, Padding, SafeArea, Scaffold, SizedBox, State, StatefulWidget, Text, TextAlign, TextEditingController, TextField, TextInputType, TextStyle, Widget;
 
 class BMICalculatorPage extends StatefulWidget {
-  const BMICalculatorPage({Key? key}) : super(key: key);
+  const BMICalculatorPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BMICalculatorPageState createState() => _BMICalculatorPageState();
 }
 
