@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:flutter/material.dart' show AppBar, BuildContext, Color, Colors, Column, CrossAxisAlignment, EdgeInsets, ElevatedButton, FontWeight, InputDecoration, MainAxisAlignment, OutlineInputBorder, Padding, SafeArea, Scaffold, SizedBox, State, StatefulWidget, Text, TextAlign, TextEditingController, TextField, TextInputType, TextStyle, Widget;
 
 class BMICalculatorPage extends StatefulWidget {

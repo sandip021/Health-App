@@ -6,6 +6,6 @@ class SleepScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Sleep Screen'));
+    return const Center(child: Text('Sleep Screen'));
   }
 }

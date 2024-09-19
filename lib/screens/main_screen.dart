@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:health/Main%20screens/BMI_screen.dart';
+import 'package:health/Main%20screens/bmi_screen.dart';
 import 'package:health/Main%20screens/calorie_screen.dart';
 import 'package:health/Main%20screens/sleep_screen.dart';
 import 'package:health/Main%20screens/water_screen.dart';
@@ -13,6 +13,7 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MainScreenState createState() => _MainScreenState();
 }
 

@@ -13,8 +13,8 @@ class SummaryWidget extends StatelessWidget {
       decoration: const BoxDecoration(
         color: cardBackgroundColor,
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
+      child: const Padding(
+        padding: EdgeInsets.all(20.0),
         child: Column(
           children: [
             SizedBox(height: 20),

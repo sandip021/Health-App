@@ -5,6 +5,6 @@ class WaterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Water Screen'));
+    return const Center(child: Text('Water Screen'));
   }
 }

@@ -5,6 +5,6 @@ class CalorieDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Calorie Data Screen'));
+    return const Center(child: Text('Calorie Data Screen'));
   }
 }

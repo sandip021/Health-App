@@ -13,10 +13,12 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // ignore: prefer_final_fields
   int _selectedIndex = 2; // Default to 'Home'
 
   // List of screens to display based on selected index
