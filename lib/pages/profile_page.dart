@@ -20,18 +20,15 @@ class _ProfilePageState extends State<ProfilePage> {
     fetchUserData();
   }
 
-  // Fetch user document ID and user data
+  // Fetch user data
   Future<void> fetchUserData() async {
-    final id = await GetUserData.getDocId(user.uid);
-    if (id != null) {
-      final data = await GetUserData.fetchUserData(id);
-      setState(() {
-        userData = data;
-      });
-    }
+    final data = await GetUserData.fetchUserData(user.uid);
+    setState(() {
+      userData = data;
+    });
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -42,18 +39,16 @@ class _ProfilePageState extends State<ProfilePage> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-               await FirebaseAuth.instance.signOut(); // Sign out the user
-               if (mounted) {
+              await FirebaseAuth.instance.signOut();
+              if (mounted) {
                 Navigator.pushAndRemoveUntil(
-                  // ignore: use_build_context_synchronously
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage(showRegisterPage: () {})),
-                  (route) => route.isFirst, // Keep the first route (initial app route)
-      );
-    }
-  },
-),
-
+                  (route) => route.isFirst,
+                );
+              }
+            },
+          ),
         ],
       ),
       body: SafeArea(
@@ -94,15 +89,15 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Helper method to create a formatted data row
- Widget buildDataRow(IconData icon, String label, String value) {
+  //create a formatted data row
+  Widget buildDataRow(IconData icon, String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0), // Ensure space between rows
+      padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Icon(icon, color: Colors.deepPurple),
-          const SizedBox(width: 8), // Adjust spacing here if needed
+          const SizedBox(width: 8),
           Expanded(
             child: Row(
               children: [
@@ -114,10 +109,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Colors.black87,
                   ),
                 ),
-                const SizedBox(width: 8), // Added spacing between title and data
+                const SizedBox(width: 8),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0), // Reduced padding
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: Colors.deepPurple[200]!),
@@ -129,7 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         fontSize: 16,
                         color: Colors.black87,
                       ),
-                      overflow: TextOverflow.ellipsis, // Handle overflow if text is too long
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -139,4 +134,5 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
     );
- }}
+  }
+}

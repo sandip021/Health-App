@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
         String uid = userCredential.user!.uid;
 
-        // Add user details including UID as docId
+        // Adding user details including UID as docId
         await addUserDetails(
           uid,
           _firstNameController.text.trim(),
@@ -134,15 +134,19 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> addUserDetails(
-      String uid, String firstName, String lastName, String email, int age) async {
-    await FirebaseFirestore.instance.collection('users').doc(uid).set({
-      'first name': firstName,
-      'last name': lastName,
-      'email': email,
-      'age': age,
-      'docId': uid, // Adding UID as docId field
-    });
-  }
+    String uid, String firstName, String lastName, String email, int age) async {
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('profile')
+      .doc('profileData') // This could be a specific document ID for profile data
+      .set({
+    'first name': firstName,
+    'last name': lastName,
+    'email': email,
+    'age': age,
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  // Helper method to build text fields
+  // build text fields
   Widget buildTextField(TextEditingController controller, String hintText, {bool obscureText = false, TextInputType keyboardType = TextInputType.text}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),

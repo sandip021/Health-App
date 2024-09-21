@@ -23,16 +23,18 @@ class GetUserData {
     }
   }
 
-  // Method to fetch and format user data by document ID
-  static Future<Map<String, String>> fetchUserData(String docId) async {
+  // Method to fetch and format user profile data from the sub-collection
+  static Future<Map<String, String>> fetchUserData(String uid) async {
     try {
-      final doc = await FirebaseFirestore.instance
+      final profileDoc = await FirebaseFirestore.instance
           .collection('users')
-          .doc(docId)
+          .doc(uid)
+          .collection('profile')
+          .doc('profileData') // the specific profile document
           .get();
 
-      if (doc.exists) {
-        final data = doc.data() as Map<String, dynamic>;
+      if (profileDoc.exists) {
+        final data = profileDoc.data() as Map<String, dynamic>;
 
         // Formatting data
         String firstName = data['first name'] ?? 'No first name available';
