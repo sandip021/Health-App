@@ -16,7 +16,21 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   bool _isLoading = false;
+  bool _isButtonEnabled = false;
   String _errorMessage = '';
+
+  // Track validation state
+  String? _emailError;
+  String? _passwordError;
+
+  // Function to validate input
+  void _validateFields() {
+    setState(() {
+      _emailError = _emailController.text.isEmpty ? 'Email cannot be empty' : null;
+      _passwordError = _passwordController.text.isEmpty ? 'Password cannot be empty' : null;
+      _isButtonEnabled = _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+    });
+  }
 
   Future<void> signIn() async {
     setState(() {
@@ -43,6 +57,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(_validateFields);
+    _passwordController.addListener(_validateFields);
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -52,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 173, 238, 227),
+      backgroundColor: const Color.fromARGB(255, 114, 222, 204),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -81,6 +102,20 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 50),
 
+                // Email label
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Username',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
                 // Email text field
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -96,9 +131,10 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.only(left: 20.0),
                       child: TextField(
                         controller: _emailController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Email',
+                          errorText: _emailError,
                         ),
                       ),
                     ),
@@ -106,6 +142,20 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
 
+                // Password label
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Password',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
                 // Password text field
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -122,9 +172,10 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextField(
                         controller: _passwordController,
                         obscureText: true,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Password',
+                          errorText: _passwordError,
                         ),
                       ),
                     ),
@@ -164,13 +215,13 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
-                    onTap: _isLoading ? null : signIn,
+                    onTap: _isButtonEnabled ? signIn : null,
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        color: _isLoading
-                            ? Colors.grey
-                            : const Color.fromARGB(255, 241, 244, 241),
+                        color: _isButtonEnabled
+                            ? const Color.fromARGB(255, 241, 244, 241)
+                            : Colors.grey,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(

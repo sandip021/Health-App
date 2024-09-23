@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text('Signed In as: ${user.email!}'),
-        backgroundColor: const Color.fromARGB(255, 173, 238, 227),
+        backgroundColor: const Color.fromARGB(255, 114, 222, 204),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
