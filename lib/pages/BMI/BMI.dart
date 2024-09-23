@@ -1,35 +1,41 @@
-import 'package:flutter/material.dart' show AppBar, BuildContext, Color, Colors, Column, CrossAxisAlignment, EdgeInsets, ElevatedButton, FontWeight, InputDecoration, MainAxisAlignment, OutlineInputBorder, Padding, SafeArea, Scaffold, SizedBox, State, StatefulWidget, Text, TextAlign, TextEditingController, TextField, TextInputType, TextStyle, Widget;
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // For formatting dates
+import 'bmi_chart_page.dart'; // Import the chart page
 
 class BMICalculatorPage extends StatefulWidget {
   const BMICalculatorPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _BMICalculatorPageState createState() => _BMICalculatorPageState();
 }
 
 class _BMICalculatorPageState extends State<BMICalculatorPage> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
+  
   String _bmiResult = '';
+  
+  // Store BMI values with corresponding dates
+  final List<Map<String, dynamic>> _bmiRecords = [];
 
-  // Method to calculate BMI
+  // Method to calculate BMI and store it with a timestamp
   void _calculateBMI() {
-    // Parse the height and weight values from the text fields
     final double? height = double.tryParse(_heightController.text);
     final double? weight = double.tryParse(_weightController.text);
 
-    // Check if the inputs are valid numbers
     if (height != null && weight != null && height > 0) {
-      // Perform the BMI calculation
       final double bmi = weight / (height * height);
 
-      // Update the result string with the calculated BMI
       setState(() {
-        _bmiResult = 'Your BMI is: ${bmi.toStringAsFixed(2)}'; // Show result with 2 decimal places
+        _bmiResult = 'Your BMI is: ${bmi.toStringAsFixed(2)}';
+
+        // Store the BMI with the current date
+        _bmiRecords.add({
+          'bmi': bmi,
+          'date': DateTime.now(),
+        });
       });
     } else {
-      // Show error message if inputs are not valid
       setState(() {
         _bmiResult = 'Please enter valid numbers for height and weight';
       });
@@ -42,6 +48,20 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
       appBar: AppBar(
         title: const Text('BMI Calculator'),
         backgroundColor: const Color.fromARGB(255, 173, 238, 227),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.show_chart),
+            onPressed: () {
+              // Navigate to the chart page, passing the BMI records
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BMIChartPage(bmiRecords: _bmiRecords),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -59,7 +79,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Input field for height
               TextField(
                 controller: _heightController,
                 keyboardType: TextInputType.number,
@@ -69,7 +88,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              // Input field for weight
               TextField(
                 controller: _weightController,
                 keyboardType: TextInputType.number,
@@ -79,7 +97,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Button to calculate BMI
               ElevatedButton(
                 onPressed: _calculateBMI,
                 style: ElevatedButton.styleFrom(
@@ -95,7 +112,6 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Display the BMI result
               Text(
                 _bmiResult,
                 textAlign: TextAlign.center,
@@ -105,6 +121,25 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                   color: Colors.deepPurple,
                 ),
               ),
+              const SizedBox(height: 20),
+
+              // Show BMI history
+              if (_bmiRecords.isNotEmpty)
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: _bmiRecords.length,
+                    itemBuilder: (context, index) {
+                      final bmiEntry = _bmiRecords[index];
+                      final formattedDate =
+                          DateFormat('yyyy-MM-dd – kk:mm').format(bmiEntry['date']);
+
+                      return ListTile(
+                        title: Text('BMI: ${bmiEntry['bmi'].toStringAsFixed(2)}'),
+                        subtitle: Text('Date: $formattedDate'),
+                      );
+                    },
+                  ),
+                ),
             ],
           ),
         ),
